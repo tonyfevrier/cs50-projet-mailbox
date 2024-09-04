@@ -31,6 +31,7 @@ function load_mailbox(mailbox) {
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
+  document.querySelector('#mail-view').style.display = "none";
 
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
@@ -51,8 +52,8 @@ function load_mailbox(mailbox) {
  
 
 function send_email(event) {
-  // send a post request to the API to send an email and show the inbox  sent
-
+  
+  // Send a mail and load the sent box
   event.preventDefault();   
   fetch('/emails', {
     method: 'POST',
@@ -69,16 +70,27 @@ function send_email(event) {
 
 
 function view_email(id){
-  console.log(111111111111111111)
-  document.body.querySelector('#mail-view').style.display = "block";
-  document.body.querySelector('#emails-view').style.display = "none";
-  document.body.querySelector('#compose-view').style.display = "none";
 
-  /*fetch(`/emails/${id}`, {
+  // Delete previous printed email contents
+  document.querySelector('#mail-view').innerHTML = "";
+
+  // Show the view containing the mail
+  document.querySelector('#mail-view').style.display = "block";
+  document.querySelector('#emails-view').style.display = "none";
+  document.querySelector('#compose-view').style.display = "none";
+
+  // Get and print the corresponding mail content
+  fetch(`/emails/${id}`, {
     method: 'GET',
   })
   .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.log(error));*/
-
+  .then(data => {
+    const email_content = document.createElement('div');
+    email_content.innerHTML = `<p>${data.subject}</p>
+      <div><p>${data.sender}</p><p>${data.timestamp}</p></div>
+      <p>${data.recipients}</p>
+      <p>${data.body}</p>`
+    document.querySelector('#mail-view').append(email_content);
+  })
+  .catch(error => console.log(error));
 }
