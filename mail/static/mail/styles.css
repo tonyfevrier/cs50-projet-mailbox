@@ -3,9 +3,10 @@ textarea {
 }
 
 .email{
-    display: flex;
+    display:inline-flex;
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid black; 
     padding: 10px;
+    width: 100%;
 } 

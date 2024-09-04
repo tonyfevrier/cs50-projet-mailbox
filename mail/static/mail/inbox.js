@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // Send an email 
   document.querySelector('.btn-primary').addEventListener('click',send_email);
 
+  // Click on a given email
+  document.querySelectorAll('.email').forEach(element => element.addEventListener('click',view_email(element.id)));
+
   // By default, load the inbox
   load_mailbox('inbox');
 });
@@ -36,21 +39,20 @@ function load_mailbox(mailbox) {
 
   // Get current emails and print it
   fetch(`/emails/${mailbox}`)
-  .then(response => response.json())
-  .then(data => data.forEach(element => { 
-      const email = document.createElement('div');
+   .then(response => response.json())
+   .then(data => data.forEach(element => { 
+      const email = document.createElement('button');
       email.className = "email";
       email.innerHTML = `<p>${element.sender}</p><p>${element.subject}</p><p>${element.timestamp}</p>`;
       if (element.read){email.style.background = 'lightgray';}
       document.querySelector('#emails-view').append(email);
-    }
-   )
-  )
+    }))
+    .catch(error => console.log(error))
 }
  
 
 function send_email(event) {
-  // send a post request to the API to send an email and show the inbox 
+  // send a post request to the API to send an email and show the inbox  sent
 
   event.preventDefault();   
   fetch('/emails', {
@@ -64,14 +66,14 @@ function send_email(event) {
       load_mailbox('sent')
     })
     .catch(error => console.log(error));
-    
-    
-    //.then(response => response.json())
-    //.then(data => console.log(data));
+}
 
-    //.then(() => load_mailbox('inbox')) 
-    //.catch(error => console.log(error));
 
-    //load_mailbox('inbox');
-
+function view_email(id){
+  fetch(`/emails/${id}`, {
+    method: 'GET',
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.log(error));
 }
