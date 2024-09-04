@@ -70,7 +70,7 @@ function send_email(event) {
 
 
 function view_email(id){
-
+ 
   // Delete previous printed email contents
   document.querySelector('#mail-view').innerHTML = "";
 
@@ -85,6 +85,7 @@ function view_email(id){
   })
   .then(response => response.json())
   .then(data => {
+    console.log(data.read);
     const email_content = document.createElement('div');
     email_content.innerHTML = `<p>${data.subject}</p>
       <div><p>${data.sender}</p><p>${data.timestamp}</p></div>
@@ -93,4 +94,11 @@ function view_email(id){
     document.querySelector('#mail-view').append(email_content);
   })
   .catch(error => console.log(error));
+
+  fetch(`/emails/${id}`,{
+    method: 'PUT',
+    body: JSON.stringify({
+      read: true,
+    })
+  })
 }
