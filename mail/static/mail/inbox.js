@@ -9,12 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // Send an email 
   document.querySelector('.btn-primary').addEventListener('click',send_email);
 
-  // Click on a given email
-  document.querySelectorAll('.email').forEach(element => element.addEventListener('click',view_email(element.id)));
-
   // By default, load the inbox
   load_mailbox('inbox');
 });
+ 
 
 function compose_email() { 
 
@@ -46,6 +44,7 @@ function load_mailbox(mailbox) {
       email.innerHTML = `<p>${element.sender}</p><p>${element.subject}</p><p>${element.timestamp}</p>`;
       if (element.read){email.style.background = 'lightgray';}
       document.querySelector('#emails-view').append(email);
+      email.addEventListener('click',() => view_email(element.id));
     }))
     .catch(error => console.log(error))
 }
@@ -70,10 +69,16 @@ function send_email(event) {
 
 
 function view_email(id){
-  fetch(`/emails/${id}`, {
+  console.log(111111111111111111)
+  document.body.querySelector('#mail-view').style.display = "block";
+  document.body.querySelector('#emails-view').style.display = "none";
+  document.body.querySelector('#compose-view').style.display = "none";
+
+  /*fetch(`/emails/${id}`, {
     method: 'GET',
   })
   .then(response => response.json())
   .then(data => console.log(data))
-  .catch(error => console.log(error));
+  .catch(error => console.log(error));*/
+
 }
