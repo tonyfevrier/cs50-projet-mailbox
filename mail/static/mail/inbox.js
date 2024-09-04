@@ -35,8 +35,14 @@ function load_mailbox(mailbox) {
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
 
   // Get current emails and print it
-  //fetch(`/emails/${mailbox}`)
-  //.then(response)
+  fetch(`/emails/${mailbox}`)
+  .then(response => response.json())
+  .then(data => data.forEach(element => { 
+      const email = document.createElement('div');
+      email.innerHTML = `<div><p>${element.sender}</p><p>${element.timestamp}</p>
+                         </div><p>${element.subject}</p>`
+      document.querySelector('#emails-view').append(email);
+    }))
 }
  
 
