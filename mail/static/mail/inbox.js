@@ -39,10 +39,13 @@ function load_mailbox(mailbox) {
   .then(response => response.json())
   .then(data => data.forEach(element => { 
       const email = document.createElement('div');
-      email.innerHTML = `<div><p>${element.sender}</p><p>${element.timestamp}</p>
-                         </div><p>${element.subject}</p>`
+      email.className = "email";
+      email.innerHTML = `<p>${element.sender}</p><p>${element.subject}</p><p>${element.timestamp}</p>`;
+      if (element.read){email.style.background = 'lightgray';}
       document.querySelector('#emails-view').append(email);
-    }))
+    }
+   )
+  )
 }
  
 
