@@ -10,27 +10,29 @@ Using JavaScript, HTML, and CSS, complete the implementation of your single-page
             - `bug avec fetch post, essayer de mettre autre chose que post pour voir s'il rentre dans la fonction.`
             - `le bug est dans les then (refus d'afficher response alors que c'est un json, comprendre pourquoi. Il me rend une fonction maintenant, comprendre pourquoi.`
         `Once the email has been sent, load the user’s sent mailbox.`
-    Mailbox: When a user visits their Inbox, Sent mailbox, or Archive, load the appropriate mailbox.
+    `Mailbox: When a user visits their Inbox, Sent mailbox, or Archive, load the appropriate mailbox.`
         `You’ll likely want to make a GET request to /emails/<mailbox> to request the emails for a particular mailbox.`
         `When a mailbox is visited, the application should first query the API for the latest emails in that mailbox.`
         `When a mailbox is visited, the name of the mailbox should appear at the top of the page (this part is done for you).`
         `Each email should then be rendered in its own box (e.g. as a <div> with a border) that displays who the email is from, what the subject line is, and the timestamp of the email.`
             - `faire le css des emails`
-        If the email is unread, it should appear with a white background. If the email has been read, it should appear with a gray background. A VERIFIER!
-            - pour l'instant ça semble buggé
-    View Email: When a user clicks on an email, the user should be taken to a view where they see the content of that email.
+        `If the email is unread, it should appear with a white background. If the email has been read, it should appear with a gray background. A VERIFIER!`
+            `- pour l'instant ça semble buggé`
+    `View Email: When a user clicks on an email, the user should be taken to a view where they see the content of that email.`
         `You’ll likely want to make a GET request to /emails/<email_id> to request the email.`
         `Your application should show the email’s sender, recipients, subject, timestamp, and body.`
             - `bug dans la création de l'élément visiblement`
         `You’ll likely want to add an additional div to inbox.html (in addition to emails-view and compose-view) for displaying the email. Be sure to update your code to hide and show the right views when navigation options are clicked.`
             - `bug quand je loadmailbox, il lance automatiquement l'event clic lié à view mail`
             - `bug quand on met plusieurs récipiendaires, le mail ne s'envoie pas.`
-        See the hint in the Hints section about how to add an event listener to an HTML element that you’ve added to the DOM.
-        Once the email has been clicked on, you should mark the email as read. Recall that you can send a PUT request to /emails/<email_id> to update whether an email is read or not.
-    Archive and Unarchive: Allow users to archive and unarchive emails that they have received.
-        When viewing an Inbox email, the user should be presented with a button that lets them archive the email. When viewing an Archive email, the user should be presented with a button that lets them unarchive the email. This requirement does not apply to emails in the Sent mailbox.
-        Recall that you can send a PUT request to /emails/<email_id> to mark an email as archived or unarchived.
-        Once an email has been archived or unarchived, load the user’s inbox.
+        `See the hint in the Hints section about how to add an event listener to an HTML element that you’ve added to the DOM.`
+        `Once the email has been clicked on, you should mark the email as read. Recall that you can send a PUT request to /emails/<email_id> to update whether an email is read or not.`
+    `Archive and Unarchive: Allow users to archive and unarchive emails that they have received.`
+        `When viewing an Inbox email, the user should be presented with a button that lets them archive the email. When viewing an Archive email, the user should be presented with a button that lets them unarchive the email. This requirement does not apply to emails in the Sent mailbox.`
+        `Recall that you can send a PUT request to /emails/<email_id> to mark an email as archived or unarchived.`
+        `Once an email has been archived or unarchived, load the user’s inbox.`
+            - `bug quand j'appuie sur archive, il me redirige bien vers inbox mais le mail archivé est là tant que je n'ai pas rafraîchi la page.`
+            - `bug quand j'archive un mail sent il reste dans sent et ne va pas dans la boite envoyé. Est-ce un comportement à conserver?`
     Reply: Allow users to reply to an email.
         When viewing an email, the user should be presented with a “Reply” button that lets them reply to the email.
         When the user clicks the “Reply” button, they should be taken to the email composition form.

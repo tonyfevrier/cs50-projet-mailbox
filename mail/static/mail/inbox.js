@@ -40,10 +40,14 @@ function load_mailbox(mailbox) {
   fetch(`/emails/${mailbox}`)
    .then(response => response.json())
    .then(data => data.forEach(element => { 
+
+      // Create the email button
       const email = document.createElement('button');
       email.className = "email";
       email.innerHTML = `<p>${element.sender}</p><p>${element.subject}</p><p>${element.timestamp}</p>`;
-      if (element.read){email.style.background = 'lightgray';}
+      if (element.read){email.style.background = 'lightgray';} else {email.style.background = 'white';}
+
+      // Print it and allow the user to watch it
       document.querySelector('#emails-view').append(email);
       email.addEventListener('click',() => view_email(element.id));
     }))
@@ -84,21 +88,51 @@ function view_email(id){
     method: 'GET',
   })
   .then(response => response.json())
-  .then(data => {
-    console.log(data.read);
+  .then(data => { 
+
+    // Create the email element and add it to the view
     const email_content = document.createElement('div');
     email_content.innerHTML = `<p>${data.subject}</p>
       <div><p>${data.sender}</p><p>${data.timestamp}</p></div>
       <p>${data.recipients}</p>
       <p>${data.body}</p>`
     document.querySelector('#mail-view').append(email_content);
+
+    // Create a button to archive or unarchive the mail 
+    if (!(data.sender === data.user)){
+      const archive = document.createElement('button');
+
+      if (!data.archived) archive.innerHTML = "Archive this mail";
+      else archive.innerHTML = "Unarchive this mail";
+      
+      // Add this element to the view
+      document.querySelector('#mail-view').append(archive);
+
+      // Allow the user to archive the mail
+      archive.addEventListener('click', () => toggle_archive_mail(data));
+    }
   })
   .catch(error => console.log(error));
 
+  // Put the email as a read one
   fetch(`/emails/${id}`,{
     method: 'PUT',
     body: JSON.stringify({
       read: true,
     })
+  }).catch(error => console.log(error));;
+}
+
+
+function toggle_archive_mail(email){
+  
+  // Archive the mail and redirect to inbox
+  fetch(`/emails/${email.id}`,{
+    method: 'PUT',
+    body: JSON.stringify({
+      archived: !email.archived,
+    })
   })
+  .then(response => load_mailbox('inbox'))
+  .catch(error => console.log(error));
 }
