@@ -44,7 +44,7 @@ function load_mailbox(mailbox) {
 
       // Create the email button
       const email = document.createElement('button');
-      email.className = "email";
+      email.className = "email-btn";
       email.innerHTML = `<p>${element.sender}</p><p>${element.subject}</p><p>${element.timestamp}</p>`;
       if (element.read){email.style.background = 'lightgray';} else {email.style.background = 'white';}
 
@@ -91,18 +91,20 @@ function view_email(id){
   .then(response => response.json())
   .then(data => { 
 
-    // Create the email element and add it to the view
+    // Create the email element and add it to the view  
+    htmlbody = data.body.replace(/\n/g, "<br>");
     const email_content = document.createElement('div');
-    email_content.innerHTML = `<p>${data.subject}</p>
-      <div><p>${data.sender}</p><p>${data.timestamp}</p></div>
-      <p>${data.recipients}</p>
-      <p>${data.body}</p>`
+    email_content.className = "email";
+    email_content.innerHTML = `<p class="email-subject">${data.subject}</p>
+      <div class="email-infos"><p>Sent by ${data.sender} to ${data.recipients}</p><p>${data.timestamp}</p></div>
+      <p class="email-body">${htmlbody}</p>`
     document.querySelector('#mail-view').append(email_content);
 
     if (!(data.sender === data.user)){
 
       // Create a button to archive or unarchive the mail 
       const archive = document.createElement('button');
+      archive.classList.add('btn', 'btn-sm', 'btn-outline-primary', 'archive-reply');
       if (!data.archived) archive.innerHTML = "Archive this mail";
       else archive.innerHTML = "Unarchive this mail";
       document.querySelector('#mail-view').append(archive);
@@ -113,6 +115,7 @@ function view_email(id){
 
     // Create a button to reply to the email
     const reply = document.createElement('button');
+    reply.classList.add('btn', 'btn-sm', 'btn-outline-primary', 'archive-reply');
     reply.innerHTML = "Reply to this mail";
     document.querySelector('#mail-view').append(reply);
     reply.addEventListener('click', () => reply_mail(data));
@@ -125,7 +128,7 @@ function view_email(id){
     body: JSON.stringify({
       read: true,
     })
-  }).catch(error => console.log(error));;
+  }).catch(error => console.log(error));
 }
 
 

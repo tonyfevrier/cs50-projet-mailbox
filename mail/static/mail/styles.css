@@ -2,11 +2,43 @@ textarea {
     min-height: 400px;
 }
 
-.email{
-    display:inline-flex;
+.email-btn{
+    display:flex;
     justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid black; 
+    align-items: center; 
     padding: 10px;
     width: 100%;
 } 
+
+.email-btn p{
+    font-size: 14px; 
+}
+
+.email{
+    border: solid 1px lightgrey;
+    padding: 10px 0;
+}
+
+.email-subject{
+    font-weight: 600;
+    padding: 0 10px;
+}
+
+.email-infos{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: gray;
+    font-size: 0.8em;
+    border-bottom: dashed 1px lightgrey;
+    padding: 0 10px;
+}
+
+.email-body{
+    margin: 20px 0;
+    padding: 0 10px;
+}
+
+.archive-reply{
+    margin: 10px 2.5px;
+}

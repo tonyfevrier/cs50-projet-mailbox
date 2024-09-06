@@ -4,7 +4,7 @@
 - `regarder video javascript pour revoir les promesses, then...`
 - `comprendre comment s'articulent le JS et les vues pour l'enregistrement en bdd. Usuellement, on envoie un form et c'est la vue qui enregistre en bdd. Là on va passer par le JS, pourquoi? (ptet juste pour éviter le rechargement d'une page web).`
 
-Using JavaScript, HTML, and CSS, complete the implementation of your single-page-app email client inside of inbox.js (and not additional or other files; for grading purposes, we’re only going to be considering inbox.js!). You must fulfill the following requirements:
+`Using JavaScript, HTML, and CSS, complete the implementation of your single-page-app email client inside of inbox.js (and not additional or other files; for grading purposes, we’re only going to be considering inbox.js!). You must fulfill the following requirements:`
     `Send Mail: When a user submits the email composition form, add JavaScript code to actually send the email.`
         `You’ll likely want to make a POST request to /emails, passing in values for recipients, subject, and body.`
             - `bug avec fetch post, essayer de mettre autre chose que post pour voir s'il rentre dans la fonction.`
@@ -33,9 +33,9 @@ Using JavaScript, HTML, and CSS, complete the implementation of your single-page
         `Once an email has been archived or unarchived, load the user’s inbox.`
             - `bug quand j'appuie sur archive, il me redirige bien vers inbox mais le mail archivé est là tant que je n'ai pas rafraîchi la page.`
             - `bug quand j'archive un mail sent il reste dans sent et ne va pas dans la boite envoyé. Est-ce un comportement à conserver?`
-    Reply: Allow users to reply to an email.
+    `Reply: Allow users to reply to an email.`
         `When viewing an email, the user should be presented with a “Reply” button that lets them reply to the email.`
-            - améliorer le css des boutons reply et archive
+            `- améliorer le css des boutons reply et archive et le css de la vue du mail et pb avec le css du bouton email des box à résoudre`
         `When the user clicks the “Reply” button, they should be taken to the email composition form.`
         `Pre-fill the composition form with the recipient field set to whoever sent the original email.`
         `Pre-fill the subject line. If the original email had a subject line of foo, the new subject line should be Re: foo. (If the subject line already begins with Re: , no need to add it again.)`
