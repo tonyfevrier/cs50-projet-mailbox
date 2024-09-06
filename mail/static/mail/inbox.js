@@ -19,6 +19,7 @@ function compose_email() {
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
+  document.querySelector('#mail-view').style.display = 'none';
 
   // Clear out composition fields
   document.querySelector('#compose-recipients').value = '';
@@ -98,19 +99,23 @@ function view_email(id){
       <p>${data.body}</p>`
     document.querySelector('#mail-view').append(email_content);
 
-    // Create a button to archive or unarchive the mail 
     if (!(data.sender === data.user)){
-      const archive = document.createElement('button');
 
+      // Create a button to archive or unarchive the mail 
+      const archive = document.createElement('button');
       if (!data.archived) archive.innerHTML = "Archive this mail";
       else archive.innerHTML = "Unarchive this mail";
-      
-      // Add this element to the view
       document.querySelector('#mail-view').append(archive);
 
       // Allow the user to archive the mail
       archive.addEventListener('click', () => toggle_archive_mail(data));
     }
+
+    // Create a button to reply to the email
+    const reply = document.createElement('button');
+    reply.innerHTML = "Reply to this mail";
+    document.querySelector('#mail-view').append(reply);
+    reply.addEventListener('click', () => reply_mail(data));
   })
   .catch(error => console.log(error));
 
@@ -135,4 +140,19 @@ function toggle_archive_mail(email){
   })
   .then(response => load_mailbox('inbox'))
   .catch(error => console.log(error));
+}
+
+
+function reply_mail(email){
+  compose_email();
+  document.querySelector('#compose-recipients').value = `${email.sender}`;
+
+  // ajouter conditions si commence par Re
+  const subject = `${email.subject}`;
+  if (subject.startsWith('Re:')){
+    document.querySelector('#compose-subject').value = `${email.subject}`;
+  } else {
+    document.querySelector('#compose-subject').value = `Re: ${email.subject}`;
+  }
+  document.querySelector('#compose-body').value = `On ${email.timestamp} ${email.sender} wrote:\n\n${email.body}`;
 }
